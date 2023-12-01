@@ -1,0 +1,10 @@
+{
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "build"]
+}

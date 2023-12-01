@@ -1,0 +1,66 @@
+version: '3'
+
+networks: # 自定义网络(默认桥接), 不使用links通信
+  nginx_network:
+    driver: bridge
+  db_network:
+    driver: bridge
+  redis_network: 
+    driver: bridge
+
+services:
+  nginx:
+    build: ./compose/nginx
+    ports:
+      - "9080:80"
+      - "9443:443"
+    volumes:
+      - ./compose/nginx/config:/etc/nginx/conf.d/ # 挂载nginx配置文件
+      - ./compose/nginx/ssl:/usr/share/nginx/ssl # 挂载ssl证书目录
+      - ./compose/nginx/log:/var/log/nginx # 挂载日志
+    networks:
+      - nginx_network
+    # 反向代理时需要加依赖，可直接使用容器名访问
+    depends_on:
+      - chat-server
+      # - backend
+    restart: always
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5544:5432"
+    env_file:
+      - ./compose/pgsql/.env
+    volumes:
+      - ./compose/pgsql/postgres_data:/var/lib/postgresql/data
+    networks:
+      - db_network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./compose/redis/redis_data:/data
+    networks:
+      - redis_network
+
+  chat-server:
+    build: .
+    working_dir: /app
+    volumes:
+      - ./apps/chat-server/log:/app/log
+    networks:
+      - db_network
+      - nginx_network
+      - redis_network
+    depends_on:
+      - redis
+    restart: always
+    tty: true
+    stdin_open: true
+    
+volumes:
+  postgres_data:
+    

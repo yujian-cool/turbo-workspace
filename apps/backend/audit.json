@@ -1,0 +1,26 @@
+{
+    "keepSettings": {
+        "type": 2,
+        "amount": 10
+    },
+    "auditFilename": "audit.json",
+    "hashType": "md5",
+    "extension": "",
+    "files": [
+        {
+            "date": 1701173551302,
+            "name": "/app/packages/lib/src/server/log/access-20231128.log",
+            "hash": "962cc9c6d6fa0e49a547441fd25a2e89"
+        },
+        {
+            "date": 1701174126140,
+            "name": "/app/apps/backend/access-20231128.log",
+            "hash": "b4df98a958d158df0e3629d69c7c20c8"
+        },
+        {
+            "date": 1701174158664,
+            "name": "/app/apps/backend/log/access-20231128.log",
+            "hash": "aa4b130e2c075c2967a615bcc664e6f4"
+        }
+    ]
+}

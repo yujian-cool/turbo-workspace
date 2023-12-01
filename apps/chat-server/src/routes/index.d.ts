@@ -1,0 +1,1 @@
+declare type httpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options' | 'head' | 'trace' | 'connect';
